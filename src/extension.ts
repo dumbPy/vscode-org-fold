@@ -11,19 +11,14 @@ export function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "vscode-org-fold" is now active!');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('vscode-org-fold.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from vscode-org-fold!');
-	});
 	const provider = new OrgFoldingAndOutlineProvider();
 	vscode.languages.registerFoldingRangeProvider('beancount', provider);
-
-
-	context.subscriptions.push(disposable);
+	const settings = vscode.workspace.getConfiguration("vscode-org-fold");
+    const languages = settings.get<string[]>("languagesToFold", []);
+	// Register the fold provider for all languages in the settings
+	for (let i = 0; i < languages.length; i++) {
+        vscode.languages.registerFoldingRangeProvider(languages[i], provider);
+	}
 }
 
 // This method is called when your extension is deactivated
