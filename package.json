@@ -1,6 +1,11 @@
 {
   "name": "vscode-org-fold",
   "displayName": "vscode-org-fold",
+  "publisher": "dumbPy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dumbPy/vscode-org-fold.git"
+  },
   "description": "Provides org mode code folding provider that can be used for other languages",
   "version": "0.0.1",
   "engines": {
